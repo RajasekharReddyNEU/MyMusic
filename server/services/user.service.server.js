@@ -9,7 +9,7 @@ module.exports = function (app, model) {
 
     var passport      = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
-    var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+    /*var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;*/
 
     passport.use(new LocalStrategy(localStrategy));
 
