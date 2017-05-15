@@ -37,24 +37,24 @@ module.exports = function (app, model) {
     app.put("/api/user/:userId", updateUser);
     app.delete("/api/user/:userId", deleteUser);
 
-    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+    /*app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
     app.get('/google/callback',
         passport.authenticate('google', {
             successRedirect: '/#/home',
             failureRedirect: '/#/login'
-        }));
+        }));*/
 
 
-    var googleConfig = {
+    /*var googleConfig = {
         clientID     : process.env.GOOGLE_CLIENT_ID,
         clientSecret : process.env.GOOGLE_CLIENT_SECRET,
         callbackURL  : process.env.GOOGLE_CALLBACK_URL
     };
+*/
 
+    // passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
-    passport.use(new GoogleStrategy(googleConfig, googleStrategy));
-
-    function googleStrategy(token, refreshToken, profile, done) {
+    /*function googleStrategy(token, refreshToken, profile, done) {
         //console.log("Google Strategy");
         //console.log(profile.id);
         userModel
@@ -89,7 +89,7 @@ module.exports = function (app, model) {
                 done(err, null);
             });
     }
-
+*/
     function localStrategy(username, password, done) {
         //console.log(username);
         console.log(password);
