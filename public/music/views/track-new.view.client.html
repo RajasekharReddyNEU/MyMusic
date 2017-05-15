@@ -1,0 +1,65 @@
+<div class="my-4 col-lg-8 mx-auto transparent-light">
+
+    <div ng-show="model.success" class="alert alert-success">{{model.success}}</div>
+    <div ng-show="model.error" class="alert alert-danger">{{model.error}}</div>
+
+    <div class="card">
+
+    <div class="card-block">
+
+        <form name="uploadForm" action="/api/upload/track"
+              method="post" enctype="multipart/form-data">
+
+            <div class="input-group mb-2 mr-sm-2 mb-sm-2">
+              <p class="col-3">  Title</p>
+            <input type="text"
+                   ng-model="model.track.title"
+                   class="form-control mr-2"
+                   id="title"
+                   name="title"
+                   required
+                   placeholder="Title*">
+            </div>
+
+            <div class="input-group mb-2 mr-sm-2 mb-sm-2">
+                <p class="col-3">  Image</p>
+            <input
+                   id="albumArt"
+                   name="myFile"
+                   class="form-control mr-2"
+                   type="file"
+                   accept=".jpg,.png,.jpeg"
+                   required
+                   placeholder="File"/>
+            </div>
+
+            <div class="input-group mb-2 mr-sm-2 mb-sm-2">
+                <p class="col-3">  Track</p>
+            <input ng-model="model.track.upload"
+                   id="myFile"
+                   name="myFile"
+                   class="form-control mr-2"
+                   type="file"
+                   accept=".mp3"
+                   required
+                   placeholder="File"/>
+            </div>
+
+            <div class="input-group mb-2 mr-sm-2 mb-sm-2">
+                <p class="col-3">  Summary</p>
+                <textarea
+                       id="summary"
+                       name="summary"
+                       class="form-control mr-2"
+                       placeholder="Summary"></textarea>
+            </div>
+
+        <button type="submit" class="btn btn-primary my-4" role="button">
+            Add Track</button>
+        </form>
+    </div>
+    </div>
+
+
+
+</div>

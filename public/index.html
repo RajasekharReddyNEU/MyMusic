@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyMusic">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    <title>MyMusic</title>
+
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" />-->
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>-->
+    <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>-->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet" />-->
+    <link href="css/bootstrap4/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet"/>
+
+    <!--// JQuery-->
+    <!--<script src="https://code.jquery.com/jquery-3.1.1.js"></script>-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <!--<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>-->
+    <!--// JQuery UI-->
+    <!--<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+    <!--<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="js/bootstrap4/bootstrap.min.js"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <!--<script src="js/angular.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+    <!--<script src="js/angular-route.js"></script>-->
+
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+    <!-- controllers -->
+    <!--Home Controllers-->
+    <script src="home/controllers/header.controller.client.js"></script>
+    <script src="home/controllers/home.controller.client.js"></script>
+    <!--Music Controllers-->
+    <script src="music/controllers/track.controller.client.js"></script>
+    <script src="music/controllers/track-list.controller.client.js"></script>
+    <script src="music/controllers/artist-list.controller.client.js"></script>
+    <script src="music/controllers/artist-track-list.controller.client.js"></script>
+    <script src="music/controllers/track-new.controller.client.js"></script>
+    <script src="music/controllers/favorite.controller.client.js"></script>
+    <script src="music/controllers/share.controller.client.js"></script>
+    <script src="music/controllers/message.controller.client.js"></script>
+    <!--User Controllers-->
+    <script src="user/controllers/login.controller.client.js"></script>
+    <script src="user/controllers/register.controller.client.js"></script>
+    <script src="user/controllers/profile.controller.client.js"></script>
+    <script src="user/controllers/admin.controller.client.js"></script>
+
+
+    <!-- services -->
+    <script src="services/user.service.client.js"></script>
+    <script src="services/music.service.client.js"></script>
+
+
+</head>
+<body ng-controller="HeaderController as model">
+<nav class="navbar navbar-toggleable-sm navbar-inverse navbar-default">
+    <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target=".dual-collapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse dual-collapse">
+        <ul class="navbar-nav mr-auto">
+            <!--User Menu-->
+            <li ng-if="model.currentUser.role=='USER'" class="nav-item" ng-repeat="m in model.userMenu"
+                ng-class="model.currentMenu.active==m.title?'active':''">
+                <a class="nav-link" href="{{m.url}}"><h5>{{m.title}}</h5></a>
+            </li>
+            <!--Artist Menu-->
+            <li ng-if="model.currentUser.role=='ARTIST'" class="nav-item" ng-repeat="m in model.artistMenu"
+                ng-class="model.currentMenu.active==m.title?'active':''">
+                <a class="nav-link" href="{{m.url}}"><h5>{{m.title}}</h5></a>
+            </li>
+            <!--Admin Menu-->
+            <li ng-if="model.currentUser.role=='ADMIN'" class="nav-item" ng-repeat="m in model.adminMenu"
+                ng-class="model.currentMenu.active==m.title?'active':''">
+                <a class="nav-link" href="{{m.url}}"><h5>{{m.title}}</h5></a>
+            </li>
+            <!--Guest Menu-->
+            <li ng-if="!model.currentUser._id" class="nav-item" ng-repeat="m in model.guestMenu"
+                ng-class="model.currentMenu.active==m.title?'active':''">
+                <a class="nav-link" href="{{m.url}}"><h5>{{m.title}}</h5></a>
+            </li>
+        </ul>
+    </div>
+    <a class="navbar-brand d-flex hidden-md-up mx-auto" href="#">MyMusic</a>
+    <div class="navbar-collapse collapse dual-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#/profile">
+                    <strong class="gray-text">{{model.currentUser.firstName || model.currentUser.username}}</strong>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar ml-auto">
+        <ul class="navbar-nav">
+
+            <li ng-if="model.currentUser._id" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="d-inline-block">
+                    <strong class=" red-text text-box em d-inline">{{model.messageCount.value}}</strong>
+                    <img class="img-prof-large" src="{{model.currentUser.photo||'uploads/default-profile.png'}}" />
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right z-top gray" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#/message">Messages</a>
+                    <a class="dropdown-item" href="#/profile">Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#/logout">Logout</a>
+                </div>
+            </li>
+            <li ng-if="!model.currentUser._id">
+                <a class="nav-link" href="#/login">
+                    <img class="img-prof-large" src="uploads/default-profile.png" />
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<nav class="navbar  navbar-default navbar-inverse sticky-top">
+    <div class="row row-margin">
+        <h4><a ng-click="model.backButton()" role="button"
+               ng-show="model.currentMenu.active!='Home'">
+            <span class="fa fa-arrow-left ml-2 mr-1 my-1"></span></a></h4>
+        <a class="navbar-brand d-flex ml-2 mr-auto hidden-sm-down" href="#">
+            <img src="music.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            <h4>MyMusic</h4></a>
+        <label class="sr-only" for="search">Search</label>
+        <div class="input-group transparent mb-2 mr-sm-2 mb-sm-2 full-width mx-auto">
+            <input type="text"
+                   ng-model="model.searchTerm"
+                   class="form-control"
+                   id="search"
+                   placeholder="Search">
+            <div ng-click="model.searchTracks()" class="input-group-addon vsk-ngclick-a mr-2">
+                <span class="fa fa-search"></span> </div>
+        </div>
+    </div>
+
+</nav>
+<div class="container-fluid" ng-view>
+
+
+</div>
+
+</body>
+</html>

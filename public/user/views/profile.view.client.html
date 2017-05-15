@@ -1,0 +1,82 @@
+
+<div class="container-fluid col-lg-8 col-md-7">
+    <div class="card-block">
+    <h1 class="text-center">Profile</h1>
+
+        <img class="img-fluid mb-sm-2"
+             width="150" height="150" src="{{model.user.photo||'../../uploads/default-profile.png'}}"
+             alt="{{model.user.firstName}}">
+
+    <div class="alert alert-danger" ng-show="model.error">
+        {{model.error}}
+    </div>
+
+    <div class="alert alert-success" ng-show="model.message">
+        {{model.message}}
+    </div>
+
+        <div class="card">
+            <form name="uploadForm" action="/api/upload" method="post" enctype="multipart/form-data">
+                <div class="input-group mb-2 mr-sm-2 my-2 mb-sm-2">
+                <input ng-model="model.widget.upload"
+                       id="myFile"
+                       name="myFile"
+                       class="form-control mr-2 ml-2"
+                       type="file"
+                       accept=".jpg,.jpeg,.png"
+                       placeholder="Header Text"/>
+                <button type="submit" class="btn btn-primary mr-2">
+                    Change Image</button>
+                </div>
+            </form>
+
+            <div class="input-group mb-2 mr-sm-2 mb-sm-2">
+        <p class="col-3">Username</p>
+        <input ng-model="model.user.username"
+               id="username"
+               class="form-control mr-2"
+               placeholder="username" readonly/>
+    </div>
+
+
+    <div class="input-group mb-2 mr-sm-2 mb-sm-2">
+        <p class="col-3">First Name </p>
+        <input type="text"
+               ng-model="model.user.firstName"
+               class="form-control mr-2"
+               id="fname">
+    </div>
+
+
+    <div class="input-group mb-2 mr-sm-2 mb-sm-2">
+        <p class="col-3">Last Name</p>
+        <input type="text"
+               ng-model="model.user.lastName"
+               class="form-control mr-2"
+               id="lname">
+    </div>
+
+
+    <div class="input-group mb-2 mr-sm-2 mb-sm-2">
+        <p class="col-3">Email</p>
+        <input type="email"
+               ng-model="model.user.email"
+               class="form-control mr-2"
+               id="email">
+    </div>
+
+
+    <div class="input-group mb-2 mr-sm-2 mb-sm-2" ng-show="model.user.role!='USER'">
+        <p class="col-3">User Role</p>
+        <input type="text"
+               ng-model="model.user.role"
+               class="form-control mr-2"
+               id="userRole"
+               placeholder="Last Name" readonly>
+    </div>
+
+    <a ng-click="model.updateProfile(model.user)"
+       class="btn btn-primary mb-2" role="button">Update</a>
+        </div>
+</div>
+</div>
